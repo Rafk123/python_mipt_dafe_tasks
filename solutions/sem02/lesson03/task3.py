@@ -4,7 +4,7 @@ import numpy as np
 def get_extremum_indices(
     ordinates: np.ndarray,
 ) -> tuple[np.ndarray, np.ndarray]:
-    if (ordinates.size < 3):
+    if ordinates.size < 3:
         raise ValueError
     diff1 = ordinates[1:] - ordinates[:-1]
     diff2 = -diff1[1:]

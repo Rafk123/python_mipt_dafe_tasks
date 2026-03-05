@@ -113,6 +113,7 @@ class TestTask1:
         with pytest.raises(Task1ShapeMismatchError):
             sum_arrays_vectorized(np.array(lhs), np.array(rhs))
 
+
 class TestTask2:
     @pytest.mark.parametrize(
         "distances, azimuth, inclination, expected_x, expected_y, expected_z",

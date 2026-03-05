@@ -2,7 +2,6 @@ import uuid
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
-
 from homeworks.hw1.aggregate_segmentation import ALLOWED_TYPES, aggregate_segmentation
 from homeworks.hw1.backoff import backoff
 from homeworks.hw1.cache import lru_cache
