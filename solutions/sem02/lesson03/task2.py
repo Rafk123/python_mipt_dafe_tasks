@@ -43,7 +43,7 @@ def convert_to_sphere(
     ):
         raise ShapeMismatchError
     return (
-        (np.pow(abscissa, 2) + np.pow(ordinates, 2) + np.pow(applicates, 2)) ** 0.5,
+        (abscissa**2 + ordinates**2 + applicates**2) ** 0.5,
         np.atan2(ordinates, abscissa),
         np.atan2((abscissa**2 + ordinates**2) ** 0.5, applicates),
     )
