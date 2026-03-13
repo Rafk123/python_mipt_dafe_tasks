@@ -10,7 +10,15 @@ def get_dominant_color_info(
         raise ValueError("threshold must be positive")
 
     threshold -= 1
-    cnt = np.bincount(image.getfield(np.uint8).ravel(), minlength=256)
+    temp = np.zeros(image.size + 258)
+    temp[0:258] = np.arange(-1, 257)
+    temp[258 : temp.size] = image.reshape(-1)
+    temp.sort()
+    temp = temp[1:] - temp[: temp.size - 1]
+    cnt = (temp == 1) * np.arange(image.size + 257) + (temp != 1) * -1
+    cnt = cnt[cnt != -1]
+    cnt = cnt[1:] - cnt[: cnt.size - 1] - 1
+
     ans = np.zeros(2 * (threshold + 1) + cnt.shape[0])
     ans[threshold + 1 : ans.shape[0] - threshold - 1] = cnt
     ans = np.cumsum(ans)
