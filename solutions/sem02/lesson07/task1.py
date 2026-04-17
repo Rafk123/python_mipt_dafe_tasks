@@ -1,12 +1,14 @@
-from typing import Any, Sequence
+from typing import Any
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.style.use('dark_background')
+plt.style.use("dark_background")
+
 
 class ShapeMismatchError(Exception):
     pass
+
 
 def visualize_diagrams(
     abscissa: np.ndarray,
@@ -15,7 +17,7 @@ def visualize_diagrams(
 ) -> None:
     if abscissa.size != ordinates.size:
         raise ShapeMismatchError
-    
+
     figure = plt.figure(figsize=(8, 8))
     gs = plt.GridSpec(2, 2, width_ratios=[1, 3], height_ratios=[3, 1])
     ord_ax = figure.add_subplot(gs[0, 0])
@@ -23,43 +25,44 @@ def visualize_diagrams(
     scat_ax = figure.add_subplot(gs[0, 1])
 
     match diagram_type:
-        case 'hist':
+        case "hist":
             ord_ax.hist(
                 ordinates,
-                bins = 50,
-                color='#0090B4',
-                edgecolor='#86CFFF',
+                bins=50,
+                color="#0090B4",
+                edgecolor="#86CFFF",
                 density=True,
-                label='ordinates',
+                label="ordinates",
                 alpha=0.3,
-                orientation='horizontal',
+                orientation="horizontal",
             )
             abs_ax.hist(
                 abscissa,
                 bins=50,
-                color='#0090B4',
-                edgecolor='#86CFFF',
+                color="#0090B4",
+                edgecolor="#86CFFF",
                 density=True,
-                label='abscissa',
+                label="abscissa",
                 alpha=0.3,
-                orientation='vertical',
+                orientation="vertical",
             )
 
             ord_ax.invert_xaxis()
             abs_ax.invert_yaxis()
-            ord_ax.legend(loc='lower left')
-            abs_ax.legend(loc='lower right')
+            ord_ax.legend(loc="lower left")
+            abs_ax.legend(loc="lower right")
 
-        case 'violin':
+        case "violin":
+
             def set_colors(violin_parts) -> None:
-                for body in violin_parts['bodies']:
-                    body.set_facecolor('#0090B4')
-                    body.set_edgecolor('#86CFFF')
+                for body in violin_parts["bodies"]:
+                    body.set_facecolor("#0090B4")
+                    body.set_edgecolor("#86CFFF")
 
                 for part in violin_parts:
                     if part != "bodies":
-                        violin_parts[part].set_edgecolor('#86CFFF')
-            
+                        violin_parts[part].set_edgecolor("#86CFFF")
+
             violin_parts = ord_ax.violinplot(
                 ordinates,
                 vert=True,
@@ -74,32 +77,27 @@ def visualize_diagrams(
             )
             set_colors(violin_parts)
 
-        case 'box':
+        case "box":
             ord_ax.boxplot(
                 ordinates,
                 vert=True,
                 patch_artist=True,
-                boxprops=dict(facecolor='#0090B4', alpha=0.3),
-                medianprops=dict(color='#86CFFF'),
+                boxprops=dict(facecolor="#0090B4", alpha=0.3),
+                medianprops=dict(color="#86CFFF"),
             )
             abs_ax.boxplot(
                 abscissa,
                 vert=False,
                 patch_artist=True,
-                boxprops=dict(facecolor='#0090B4', alpha=0.3),
-                medianprops=dict(color='#86CFFF'),
+                boxprops=dict(facecolor="#0090B4", alpha=0.3),
+                medianprops=dict(color="#86CFFF"),
             )
 
         case _:
             raise ValueError
-        
-    scat_ax.scatter(
-        abscissa, 
-        ordinates,
-        color='#0090B4',
-        edgecolors='#86CFFF',
-        alpha=0.3
-    )
+
+    scat_ax.scatter(abscissa, ordinates, color="#0090B4", edgecolors="#86CFFF", alpha=0.3)
+
 
 if __name__ == "__main__":
     mean = [2, 3]

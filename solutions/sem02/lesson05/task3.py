@@ -14,8 +14,8 @@ def adaptive_filter(
     m = Vs.shape[0]
     k = Vj.shape[1]
 
-    if (m != Vj.shape[0] or k != diag_A.size):
+    if m != Vj.shape[0] or k != diag_A.size:
         raise ShapeMismatchError
-    
+
     Vjh = Vj.T.conj()
     return Vs - Vj @ np.linalg.inv(np.diag(np.ones(k)) + (Vjh @ Vj) * diag_A) @ (Vjh @ Vs)
